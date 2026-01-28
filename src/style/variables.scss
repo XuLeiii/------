@@ -1,0 +1,16 @@
+@mixin text-overflow() {
+  // 基础样式：单行文本溢出隐藏，显示省略号
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+// @include text-overflow();
+
+@mixin text-overflow-multiline($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+//  @include text-overflow-multiline(2);
