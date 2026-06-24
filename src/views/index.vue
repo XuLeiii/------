@@ -1,12 +1,12 @@
 <template>
   <div class="the-layout-box">
     <h1>home</h1>
-    <project-list></project-list>
+    <demo></demo>
   </div>
 </template>
 
 <script setup lang="ts">
-  import ProjectList from '@/views/the-project/project-list.vue';
+  import demo from '@/views/demo/demo.vue';
 </script>
 
 <style scoped>
