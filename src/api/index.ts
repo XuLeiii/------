@@ -34,17 +34,26 @@ service.interceptors.response.use(
     return Promise.reject(new Error(message));
   },
   (error: any) => {
-    const { response } = error;
+    const { response, message, status } = error;
 
-    if (!response) {
-      ElMessage.error(i18n.global.t('common.networkError'));
-      console.error('网络异常:', error);
-    } else {
-      ElMessage.error(i18n.global.t('common.serviceError'));
-      console.error('服务异常:', error);
+    if (error.code == 'ERR_CANCELED') {
+      return Promise.reject(new Error(error));
     }
 
-    return Promise.reject(error);
+    if (!response) {
+      // 网络或连接异常，服务器未响应,如请求取消，请求超时等
+      // ElMessage.error(i18n.global.t('common.networkError'));
+      ElMessage.error('接口请求失败:', message);
+      console.error('接口请求失败:', error);
+      return Promise.reject(new Error(message));
+    }
+
+    // 服务异常：4xx错误/5xx错误会走到这里，表示服务器是有响应的，但是响应码不是2xx范围
+    // ElMessage.error(i18n.global.t('common.serviceError'));
+    ElMessage.error('服务异常:', message);
+    console.error('服务异常:', error);
+
+    return Promise.reject(new Error(message));
   }
 );
 
